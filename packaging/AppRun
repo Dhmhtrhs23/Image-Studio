@@ -1,0 +1,32 @@
+#!/bin/sh
+# AppRun launcher for OpenRouter Image Studio
+HERE="$(dirname "$(readlink -f "$0")")"
+
+if [ -z "$LD_LIBRARY_PATH" ]; then
+  export LD_LIBRARY_PATH="$HERE/usr/lib"
+else
+  export LD_LIBRARY_PATH="$HERE/usr/lib:$LD_LIBRARY_PATH"
+fi
+
+if [ -z "$XDG_DATA_DIRS" ]; then
+  XDG_DATA_DIRS="/usr/local/share:/usr/share"
+fi
+export XDG_DATA_DIRS="$HERE/usr/share:$XDG_DATA_DIRS"
+
+export GSETTINGS_SCHEMA_DIR="$HERE/usr/share/glib-2.0/schemas"
+export GIO_EXTRA_MODULES="$HERE/usr/lib/gio/modules"
+export GTK_EXE_PREFIX="$HERE/usr"
+export GTK_DATA_PREFIX="$HERE/usr"
+
+CACHE="$HERE/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
+if [ -f "$CACHE" ]; then
+  TMPD="$TMPDIR"
+  if [ -z "$TMPD" ]; then TMPD="/tmp"; fi
+  TMPCACHE="$TMPD/oris-pixbuf-loaders-$$.cache"
+  sed "s|@APPDIR@|$HERE|g" "$CACHE" > "$TMPCACHE" 2>/dev/null || true
+  if [ -s "$TMPCACHE" ]; then
+    export GDK_PIXBUF_MODULE_FILE="$TMPCACHE"
+  fi
+fi
+
+exec "$HERE/usr/bin/openrouter-image-studio" "$@"

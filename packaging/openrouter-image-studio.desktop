@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=OpenRouter Image Studio
+GenericName=Image Generation Studio
+Comment=Generate and understand images with the OpenRouter Image API
+Exec=openrouter-image-studio
+Icon=openrouter-image-studio
+Terminal=false
+Categories=Graphics;2DGraphics;Photography;
+Keywords=OpenRouter;Image;AI;Generation;Diffusion;Vision;
+StartupNotify=true
+StartupWMClass=openrouter-image-studio

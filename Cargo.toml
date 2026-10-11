@@ -1,0 +1,22 @@
+[package]
+name = "openrouter-image-studio"
+version = "0.1.0"
+edition = "2021"
+description = "GTK4 desktop client for the OpenRouter Image API (generation + understanding)"
+license = "MIT"
+
+[dependencies]
+gtk4 = { version = "0.9", features = ["v4_10", "v4_12"] }
+glib = "0.20"
+gio = "0.20"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+base64 = "0.22"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls", "gzip", "deflate"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp", "gif", "bmp", "tiff"] }
+async-channel = "2"
+
+[profile.release]
+opt-level = 2
+lto = "thin"
+strip = true
